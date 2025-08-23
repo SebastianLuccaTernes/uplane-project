@@ -108,4 +108,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Sebastian Luca Ternes**
 
 - GitHub: [@SebastianLuccaTernes](https://github.com/SebastianLuccaTernes)
-- Project: [All-In-Tracker](https://github.com/SebastianLuccaTernes/All-In-Tracker)
