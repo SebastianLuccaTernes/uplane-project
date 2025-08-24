@@ -9,21 +9,50 @@ export default function BackgroundRemover() {
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleImageUpload = (file: File) => {
+  const handleImageUpload = async (file: File) => {
     const url = URL.createObjectURL(file);
     setOriginalImage(url);
     setProcessedImage(null);
     
-    // Simulate processing
+    // Process image using the API
     setIsProcessing(true);
-    setTimeout(() => {
-      // In a real app, this would be the result from your background removal API
-      setProcessedImage(url); // For demo purposes, using the same image
+    
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const response = await fetch('/api/removebg', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to process image');
+      }
+      
+      // Create blob URL for the processed image
+      const blob = await response.blob();
+      const processedUrl = URL.createObjectURL(blob);
+      setProcessedImage(processedUrl);
+      
+    } catch (error) {
+      console.error('Error processing image:', error);
+      alert('Failed to process image. Please try again.');
+    } finally {
       setIsProcessing(false);
-    }, 3000);
+    }
   };
 
   const handleReset = () => {
+    // Clean up blob URLs to prevent memory leaks
+    if (originalImage) {
+      URL.revokeObjectURL(originalImage);
+    }
+    if (processedImage) {
+      URL.revokeObjectURL(processedImage);
+    }
+    
     setOriginalImage(null);
     setProcessedImage(null);
     setIsProcessing(false);
