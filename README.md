@@ -61,7 +61,7 @@ This project demonstrates a complete image processing pipeline that allows users
 3. **Environment Setup**
 
    ```bash
-   cp .env.example .env.local
+   cp .env
    ```
 
    Add your environment variables:
