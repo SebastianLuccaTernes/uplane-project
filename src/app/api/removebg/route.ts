@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import sharp from 'sharp'
 
 // api/removebg
 export async function POST(request: NextRequest) {
@@ -6,6 +7,7 @@ export async function POST(request: NextRequest) {
         // Parse form data from the request
         const formData = await request.formData()
         const file = formData.get('image') as File
+        const flip = formData.get('flip') === 'true'
         
         if (!file) {
             return NextResponse.json(
@@ -37,11 +39,28 @@ export async function POST(request: NextRequest) {
         
         const processedImageBuffer = await removeBackground(buffer, file.type)
 
+        // Apply horizontal flip if requested
+        let finalImageBuffer = processedImageBuffer
+        if (flip) {
+            console.log('Applying horizontal flip...')
+            try {
+                finalImageBuffer = await sharp(processedImageBuffer)
+                    .flop() // Horizontal flip (mirror)
+                    .png({ quality: 100 }) // Ensure high quality PNG output
+                    .toBuffer()
+                console.log('Flip applied successfully')
+            } catch (flipError) {
+                console.error('Error applying flip:', flipError)
+                // If flip fails, return the original processed image
+                finalImageBuffer = processedImageBuffer
+            }
+        }
+
         // Return the processed image
-        return new NextResponse(new Uint8Array(processedImageBuffer), {
+        return new NextResponse(new Uint8Array(finalImageBuffer), {
             headers: {
                 'Content-Type': 'image/png',
-                'Content-Disposition': `attachment; filename="removed-bg-${file.name}"`
+                'Content-Disposition': `attachment; filename="removed-bg-${flip ? 'flipped-' : ''}${file.name}"`
             }
         })
 
@@ -67,7 +86,11 @@ async function removeBackground(imageBuffer: Buffer, mimeType: string): Promise<
 async function removeBackgroundWithRemoveBg(imageBuffer: Buffer): Promise<Buffer> {
     const formData = new FormData()
     const uint8Array = new Uint8Array(imageBuffer)
-    formData.append('image_file', new Blob([uint8Array]))
+    
+    // Create blob with proper MIME type
+    const blob = new Blob([uint8Array], { type: 'image/png' })
+    formData.append('image_file', blob, 'image.png')
+    formData.append('size', 'auto')
     
     const response = await fetch('https://api.remove.bg/v1.0/removebg', {
         method: 'POST',
@@ -78,7 +101,9 @@ async function removeBackgroundWithRemoveBg(imageBuffer: Buffer): Promise<Buffer
     })
 
     if (!response.ok) {
-        throw new Error(`Remove.bg API error: ${response.statusText}`)
+        const errorText = await response.text()
+        console.error('Remove.bg API error details:', errorText)
+        throw new Error(`Remove.bg API error: ${response.status} ${response.statusText} - ${errorText}`)
     }
 
     return Buffer.from(await response.arrayBuffer())

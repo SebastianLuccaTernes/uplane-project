@@ -26,7 +26,7 @@ export default function ProcessedImage({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
+    <div className="w-full max-w-2xl mx-auto space-y-6">
       <div className="flex justify-center space-x-4">
         <button
           onClick={() => setShowComparison(false)}
@@ -55,7 +55,7 @@ export default function ProcessedImage({
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="p-6 border-r">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Original</h3>
-              <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
+              <div className="relative aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden">
                 <Image
                   src={originalImage}
                   alt="Original"
@@ -68,7 +68,7 @@ export default function ProcessedImage({
               <h3 className="text-lg font-medium text-gray-900 mb-4">
                 Background Removed
               </h3>
-              <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
+              <div className="relative aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden">
                 {isProcessing ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -90,7 +90,7 @@ export default function ProcessedImage({
           </div>
         ) : (
           <div className="p-6">
-            <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
+            <div className="relative aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden">
               {isProcessing ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">

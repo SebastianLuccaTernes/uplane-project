@@ -5,17 +5,11 @@ export default function Header() {
         <div className="flex justify-between items-center py-6">
           <div className="flex items-center">
             <h1 className="text-2xl font-bold text-gray-900">
-              Background Remover
+              Background Remover and Flipper
             </h1>
           </div>
           <nav className="hidden md:flex space-x-8">
-            <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors">
-              Home
-            </a>
-            <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors">
-              About
-            </a>
-            <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors">
+            <a href="https://github.com/SebastianLuccaTernes" className="text-gray-500 hover:text-gray-900 transition-colors">
               Contact
             </a>
           </nav>
