@@ -70,7 +70,14 @@ This project demonstrates a complete image processing pipeline that allows users
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   REMOVEBG_API_KEY=your_removebg_api_key_here
    ```
+
+   **Note:** To use the background removal feature, you'll need to:
+
+   - Sign up at [remove.bg](https://www.remove.bg/)
+   - Get your API key from the dashboard
+   - Add it to your environment variables
 
 4. **Run the development server**
 
@@ -91,6 +98,9 @@ uplane-project/
 │   │   ├── page.tsx         # Home page
 │   │   ├── globals.css      # Global styles
 │   │   └── api/             # API routes
+│   │       ├── route.ts     # General API endpoint
+│   │       └── removebg/    # Background removal API
+│   │           └── route.ts # Background removal endpoint
 │   ├── components/          # Reusable UI components
 │   ├── lib/                 # Utility functions
 │   └── types/               # TypeScript type definitions
@@ -98,6 +108,52 @@ uplane-project/
 ├── package.json             # Dependencies and scripts
 └── README.md               # Project documentation
 ```
+
+## API Documentation
+
+### Background Removal API
+
+The background removal API allows you to upload image files and receive processed images with transparent backgrounds.
+
+**Endpoint:** `POST /api/removebg`
+
+**Request:**
+
+- Method: `POST`
+- Content-Type: `multipart/form-data`
+- Body: FormData with `image` field containing the image file
+
+**Response:**
+
+- Success: Returns the processed image as a binary stream with `Content-Type: image/png`
+- Error: Returns JSON with error message and appropriate HTTP status code
+
+**Example Usage:**
+
+```javascript
+const formData = new FormData();
+formData.append("image", imageFile);
+
+const response = await fetch("/api/removebg", {
+  method: "POST",
+  body: formData,
+});
+
+if (response.ok) {
+  const blob = await response.blob();
+  const processedImageUrl = URL.createObjectURL(blob);
+  // Use the processed image
+} else {
+  const error = await response.json();
+  console.error("Error:", error.error);
+}
+```
+
+**Limitations:**
+
+- Maximum file size: 10MB
+- Supported formats: All image types (JPEG, PNG, WebP, etc.)
+- Requires `REMOVEBG_API_KEY` environment variable for remove.bg service
 
 ## License
 
