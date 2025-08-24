@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Background Remover - Remove Image Backgrounds with AI",
+  title: "Background Remover",
   description: "Free AI-powered background removal tool. Upload your image and get professional results instantly.",
 };
 

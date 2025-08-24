@@ -8,18 +8,25 @@ export default function BackgroundRemover() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [originalFile, setOriginalFile] = useState<File | null>(null);
 
   const handleImageUpload = async (file: File) => {
     const url = URL.createObjectURL(file);
     setOriginalImage(url);
+    setOriginalFile(file);
     setProcessedImage(null);
     
+    await processImage(file);
+  };
+
+  const processImage = async (file: File) => {
     // Process image using the API
     setIsProcessing(true);
     
     try {
       const formData = new FormData();
       formData.append('image', file);
+      formData.append('flip', 'true'); 
       
       const response = await fetch('/api/removebg', {
         method: 'POST',
@@ -45,7 +52,6 @@ export default function BackgroundRemover() {
   };
 
   const handleReset = () => {
-    // Clean up blob URLs to prevent memory leaks
     if (originalImage) {
       URL.revokeObjectURL(originalImage);
     }
@@ -56,6 +62,7 @@ export default function BackgroundRemover() {
     setOriginalImage(null);
     setProcessedImage(null);
     setIsProcessing(false);
+    setOriginalFile(null);
   };
 
   return (
@@ -63,10 +70,10 @@ export default function BackgroundRemover() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Remove Background from Images
+            Remove Background from Images and Flip it 
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Upload your image and our AI will automatically remove the background for you. 
+            Upload your image and our we will automatically remove the background for you and Flip the image horizontally. 
             Fast, accurate, and completely free.
           </p>
         </div>
@@ -92,7 +99,7 @@ export default function BackgroundRemover() {
           </div>
         )}
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
