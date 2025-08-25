@@ -121,10 +121,10 @@ export default function ProcessedImage({
           className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
             !showComparison
               ? 'bg-blue-600 text-white shadow-lg'
-              : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              : 'text-gray-300 hover:bg-gray-800'
           }`}
+          style={{ backgroundColor: !showComparison ? '#2563eb' : '#333333' }}
           animate={{
-            backgroundColor: !showComparison ? '#2563eb' : '#374151',
             scale: !showComparison ? 1.05 : 1
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -138,10 +138,10 @@ export default function ProcessedImage({
           className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
             showComparison
               ? 'bg-blue-600 text-white shadow-lg'
-              : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              : 'text-gray-300 hover:bg-gray-800'
           }`}
+          style={{ backgroundColor: showComparison ? '#2563eb' : '#333333' }}
           animate={{
-            backgroundColor: showComparison ? '#2563eb' : '#374151',
             scale: showComparison ? 1.05 : 1
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -151,7 +151,8 @@ export default function ProcessedImage({
       </div>
 
       <motion.div 
-        className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700"
+        className="rounded-lg shadow-lg overflow-hidden border border-gray-700"
+        style={{ backgroundColor: '#000000' }}
         layout
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
@@ -175,8 +176,8 @@ export default function ProcessedImage({
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
               >
-                <h3 className="text-lg font-medium text-gray-100 mb-4">Original</h3>
-                <div className="relative aspect-[4/3] bg-gray-700 rounded-lg overflow-hidden">
+                <h3 className="text-lg font-medium text-white mb-4">Original</h3>
+                <div className="relative aspect-[4/3] rounded-lg overflow-hidden" style={{ backgroundColor: '#000000' }}>
                   <Image
                     src={originalImage}
                     alt="Original"
@@ -191,10 +192,10 @@ export default function ProcessedImage({
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
               >
-                <h3 className="text-lg font-medium text-gray-100 mb-4">
+                <h3 className="text-lg font-medium text-white mb-4">
                   Background Removed
                 </h3>
-                <div className="relative aspect-[4/3] bg-gray-700 rounded-lg overflow-hidden">
+                <div className="relative aspect-[4/3] rounded-lg overflow-hidden" style={{ backgroundColor: '#000000' }}>
                   {isProcessing ? (
                     <div className="flex items-center justify-center h-full">
                       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -221,7 +222,7 @@ export default function ProcessedImage({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: 0.1 }}
             >
-              <div className="relative aspect-[4/3] bg-gray-700 rounded-lg overflow-hidden">
+              <div className="relative aspect-[4/3] rounded-lg overflow-hidden" style={{ backgroundColor: '#000000' }}>
                 {isProcessing ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center">
@@ -291,7 +292,8 @@ export default function ProcessedImage({
                   type="text"
                   value={uploadedImage.public_url}
                   readOnly
-                  className="flex-1 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-md text-sm"
+                  className="flex-1 px-3 py-2 border border-gray-600 text-gray-200 rounded-md text-sm"
+                  style={{ backgroundColor: '#000000' }}
                 />
                 <motion.button
                   onClick={copyToClipboard}
