@@ -21,6 +21,8 @@ jest.mock('uuid', () => ({
 }))
 
 describe('/api/upload route', () => {
+  // Import the mocked module within the test suite
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const mockSupabaseAdmin = require('@/lib/supabase').supabaseAdmin
 
   beforeEach(() => {

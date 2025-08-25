@@ -16,6 +16,8 @@ jest.mock('next/server', () => ({
 jest.mock('@/lib/supabase')
 
 describe('/api/delete/[id] route', () => {
+  // Import the mocked module within the test suite
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const mockSupabaseAdmin = require('@/lib/supabase').supabaseAdmin
 
   beforeEach(() => {
@@ -181,7 +183,6 @@ describe('/api/delete/[id] route', () => {
     })
 
     it('should handle general server error', async () => {
-      const mockParams = Promise.resolve({ id: '123' })
       const mockRequest = {} as NextRequest
 
       // Mock params rejection to trigger catch block

@@ -1,5 +1,4 @@
 import { GET, POST } from '@/app/api/route'
-import { NextRequest } from 'next/server'
 
 // Mock NextResponse
 jest.mock('next/server', () => ({

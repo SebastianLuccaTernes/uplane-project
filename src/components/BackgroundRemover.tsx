@@ -9,7 +9,7 @@ export default function BackgroundRemover() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [originalFile, setOriginalFile] = useState<File | null>(null);
+  const [_originalFile, setOriginalFile] = useState<File | null>(null);
 
   const handleImageUpload = async (file: File) => {
     const url = URL.createObjectURL(file);

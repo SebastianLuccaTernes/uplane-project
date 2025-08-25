@@ -177,6 +177,7 @@ describe('/api/removebg route', () => {
 
       // Mock successful remove.bg API response
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       mockFetch.mockResolvedValueOnce({
         ok: true,
         status: 200,
@@ -224,6 +225,7 @@ describe('/api/removebg route', () => {
 
       // Mock failed remove.bg API response
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       mockFetch.mockResolvedValueOnce({
         ok: false,
         status: 400,
@@ -264,14 +266,17 @@ describe('/api/removebg route', () => {
 
       // Mock successful remove.bg API response
       const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       mockFetch.mockResolvedValueOnce({
         ok: true,
         status: 200,
         arrayBuffer: jest.fn().mockResolvedValue(new ArrayBuffer(2048)),
       } as any)
 
-      const sharp = require('sharp')
-      const response = await POST(mockRequest)
+      // Import the mocked sharp module
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const sharp = require('sharp') as jest.MockedFunction<typeof import('sharp')>
+      const _response = await POST(mockRequest)
 
       // Verify sharp was called for flipping
       expect(sharp).toHaveBeenCalled()
