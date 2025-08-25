@@ -9,7 +9,8 @@ export default function BackgroundRemover() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [originalFile, setOriginalFile] = useState<File | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_originalFile, setOriginalFile] = useState<File | null>(null);
 
   const handleImageUpload = async (file: File) => {
     const url = URL.createObjectURL(file);

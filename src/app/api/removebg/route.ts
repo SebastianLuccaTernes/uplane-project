@@ -73,7 +73,8 @@ export async function POST(request: NextRequest) {
     }
 }
 
-async function removeBackground(imageBuffer: Buffer, mimeType: string): Promise<Buffer> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function removeBackground(imageBuffer: Buffer, _mimeType: string): Promise<Buffer> {
     // Option 1: Using remove.bg API (requires API key)
     if (process.env.REMOVEBG_API_KEY) {
         return await removeBackgroundWithRemoveBg(imageBuffer)
