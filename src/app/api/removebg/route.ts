@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
-import sharp from 'sharp'
+
+// Dynamic import of sharp to handle platform-specific issues
+let sharp: any = null
+try {
+    sharp = require('sharp')
+} catch (error) {
+    console.warn('Sharp module could not be loaded:', error instanceof Error ? error.message : String(error))
+}
 
 // api/removebg
 export async function POST(request: NextRequest) {
@@ -44,6 +51,18 @@ export async function POST(request: NextRequest) {
         if (flip) {
             console.log('Applying horizontal flip...')
             try {
+                if (!sharp) {
+                    console.warn('Sharp not available, flip functionality disabled for this deployment')
+                    // Return the image without flip but with a warning header
+                    return new NextResponse(new Uint8Array(processedImageBuffer), {
+                        headers: {
+                            'Content-Type': 'image/png',
+                            'Content-Disposition': `attachment; filename="removed-bg-${file.name}"`,
+                            'X-Warning': 'Flip functionality not available on this platform'
+                        }
+                    })
+                }
+                
                 finalImageBuffer = await sharp(processedImageBuffer)
                     .flop() // Horizontal flip (mirror)
                     .png({ quality: 100 }) // Ensure high quality PNG output
