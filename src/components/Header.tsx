@@ -1,15 +1,15 @@
 export default function Header() {
   return (
-    <header className="bg-gray-900 shadow-sm border-b border-gray-700">
+    <header className="shadow-sm border-b" style={{ backgroundColor: '#000000', borderColor: '#333333' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-6">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-100">
+            <h1 className="text-2xl font-bold text-white">
               Background Remover and Flipper
             </h1>
           </div>
           <nav className="hidden md:flex space-x-8">
-            <a href="https://github.com/SebastianLuccaTernes" className="text-gray-400 hover:text-gray-100 transition-colors">
+            <a href="https://github.com/SebastianLuccaTernes" className="text-gray-400 hover:text-white transition-colors">
               Contact
             </a>
           </nav>

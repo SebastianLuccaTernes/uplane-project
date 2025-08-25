@@ -51,9 +51,10 @@ export default function ImageUploader({ onImageUpload }: ImageUploaderProps) {
           border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors
           ${isDragging 
             ? 'border-blue-400 bg-blue-900/20' 
-            : 'border-gray-600 hover:border-gray-500 bg-gray-800'
+            : 'border-gray-600 hover:border-gray-500'
           }
         `}
+        style={{ backgroundColor: isDragging ? undefined : '#000000' }}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
