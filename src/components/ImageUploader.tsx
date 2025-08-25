@@ -50,8 +50,8 @@ export default function ImageUploader({ onImageUpload }: ImageUploaderProps) {
         className={`
           border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors
           ${isDragging 
-            ? 'border-blue-400 bg-blue-50' 
-            : 'border-gray-300 hover:border-gray-400'
+            ? 'border-blue-400 bg-blue-900/20' 
+            : 'border-gray-600 hover:border-gray-500 bg-gray-800'
           }
         `}
         onDragOver={handleDragOver}
@@ -74,11 +74,11 @@ export default function ImageUploader({ onImageUpload }: ImageUploaderProps) {
             />
           </svg>
           <div>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-300">
               Drop your image here, or{' '}
-              <span className="text-blue-600 font-medium">browse</span>
+              <span className="text-blue-400 font-medium">browse</span>
             </p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-gray-400 mt-2">
               Support: JPG, PNG, GIF up to 10MB
             </p>
           </div>
